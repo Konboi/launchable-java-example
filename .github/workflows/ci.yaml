@@ -31,3 +31,8 @@ jobs:
         run: launchable verify
       - name: record build
         run: launchable record build --name ${GITHUB_RUN_ID}
+      - name: Run tests
+        run: mvn test
+      - name: launchable record tests
+        run: launchable record tests maven target/surefire-reports/TEST-example.*.xml
+        if: always()
