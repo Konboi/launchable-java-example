@@ -32,9 +32,9 @@ jobs:
       - name: record build
         run: launchable record build --name ${GITHUB_RUN_ID}
       - name: subset
-        run: launchable subset --target 80% maven src/test/java > launchable-subset.txt
+        run: launchable subset --target 80% --get-tests-from-previous-sessions --output-exclusion-rules maven > launchable-exclude.txt
       - name: Run tests
-        run: mvn test -Dsurefire.includesFile=launchable-subset.txt
+        run: mvn test -Dsurefire.excludesFile=launchable-exclude.txt
       - name: launchable record tests
         run: launchable record tests maven target/surefire-reports/TEST-example.*.xml
         if: always()
